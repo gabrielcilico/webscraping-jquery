@@ -1,28 +1,29 @@
-function getTitle(index) {
-    return $(".product-card__title")[index].innerText;
+function getTitle(father) {
+    return father.find(".product-card__title").text();
 }
 
-function getDiscount(index) {
-    return $(".promotion__tag-discount")[index].innerText;
+function getDiscount(father) {
+    return father.find(".promotion__tag-discount").text();
 }
 
-function getValue(index) {
-    return $(".promotion-price")[index].innerText;
+function getValue(father) {
+    return father.find(".promotion-price").text();
 }
 
 function getJson() {
 	let cards = $(".product-card__link");
 	let jsonCards = [];
 	
-	for (let index = 0; index < cards.length; index++) {
+	$.each($(".product-card"), function() {
+		let currentCard = $(this);
 		jsonCards.push({
-			title: getTitle(index),
-			value: getValue(index),
-			discount: getDiscount(index)
+			title: getTitle(currentCard),
+			value: getValue(currentCard),
+			discount: getDiscount(currentCard)
 		})
-	}	
+	});
 	
-	return JSON.stringify(jsonCards)
+	return JSON.stringify(jsonCards, "", 2)
 }
 
 getJson();
